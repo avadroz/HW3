@@ -1,0 +1,56 @@
+#Group Names 
+#Ava Droznik
+#Irania Matos
+#Federico Ciandri
+#Maurice Agonsi
+
+
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+setwd("/Users/Avadroznik/Downloads")
+load("d_HHP2020_24.RData")
+names(d_HHP2020_24)
+
+ggplot(d_HHP2020_24, aes(x = Education))+ #Education per region. 
+ geom_bar(
+  position = "dodge",
+  mapping = aes(
+    y = after_stat(prop),
+    group = Region,
+    fill = Region ))
+
+#In this graph we learned that in the Northeast college grand and adv degree are 
+#very high compared to the other states. We can see that associate degree are significantly 
+#low for all region compare to some college and college graduate. 
+  
+d_HHP2020_24$partnered <- (d_HHP2020_24$Mar_Stat == "Married") | 
+  (d_HHP2020_24$Mar_Stat == "widowed") | 
+  (d_HHP2020_24$Mar_Stat == "divorced") |
+  (d_HHP2020_24$Mar_Stat == "separated")
+summary(d_HHP2020_24$Mar_Stat)
+
+
+ggplot(d_HHP2020_24, aes(x = Education, fill = Mar_Stat)) + #Education and Mariral Status 
+  geom_bar(position = "fill") +
+  labs(title = "Marital Status and Education",
+  x = "Education", y = "Proportion", fill = "Marital Status") +
+  theme_minimal()
+
+#Here we see the relationship between marital status and education. We see the biggest proportion
+#of married people have an advance degree. The biggest proportion for separated are does with only 
+#some high school.
+
+
+ggplot(d_HHP2020_24, aes(x = workloss, fill = Education)) + #Workloss vs Education 
+  geom_bar(position = "fill") +
+  labs(
+    title = "Work Loss by Education",
+    x = "Work Loss",
+    y = "Proportion"
+  ) +
+  theme_minimal()
+
+
+#This graph show some interested information. We're able to see that those with advance and college graduates
+#said no to work loss.  While does with just some college and just high school said yes to to loss of work.
